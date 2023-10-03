@@ -14,9 +14,11 @@ namespace nc
 		void Draw(Renderer& renderer) override;
 
 	private:
-		float m_angle = 0;
+		float m_angleFlip = 0;
+		float m_angleRotate = 0;
+		float m_scale = 1;
 		float m_time;
 		vec2 m_position;
-		std::vector<vec2> m_positions;
+		//std::vector<vec2> m_positions;
 	};
 }

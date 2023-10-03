@@ -17,12 +17,19 @@ namespace nc
 
     void World01::Update(float dt)
     {
-        m_angle += (dt * 90);
+        m_angleRotate += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_LEFT) ? +(dt * 90) : 0;
+        m_angleRotate += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_RIGHT) ? -(dt * 90) : 0;
+
+        m_angleFlip += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_UP) ? +(dt * 90) : 0;
+        m_angleFlip += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_DOWN) ? -(dt * 90) : 0;
 
         m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? +dt : 0;
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt : 0;
         m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? -dt : 0;
         m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? +dt : 0;
+
+        m_scale += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_Q) ? +dt : 0;
+        m_scale += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_E) ? -dt : 0;
 
         m_time += dt;
     }
@@ -33,27 +40,31 @@ namespace nc
         // pre-render
         renderer.BeginFrame();
 
-        // render
-        glPushMatrix();
-        glTranslatef(m_position.x, m_position.y, 0);
-        //glRotatef(m_angle, 1, 0, 0);
-        glScalef(sin(m_time), sin(m_time), 1);
+        for (int i = 0; i < 10; i++)
+        {
 
-        glBegin(GL_TRIANGLES);
+            // render
+            glPushMatrix();
+            glTranslatef(m_position.x, m_position.y, 0);
+            glRotatef(m_angleRotate, 0, 1, 0);
+            glRotatef(m_angleFlip, 1, 0, 0);
+            glScalef(m_scale, m_scale, 1);
 
-        glColor3f(1, 0, 0);
-        glVertex2f(-0.5f, -0.5f);
+            glBegin(GL_TRIANGLES);
 
-        glColor3f(0, 1, 0);
-        glVertex2f(0, 0.5f);
+            glColor3f(1, 0, 0);
+            glVertex2f(-0.5f, -0.5f);
 
-        glColor3f(0, 0, 1);
-        glVertex2f(0.5f, -0.5f);
+            glColor3f(0, 1, 0);
+            glVertex2f(0, 0.5f);
 
-        glEnd();
+            glColor3f(0, 0, 1);
+            glVertex2f(0.5f, -0.5f);
 
-        glPopMatrix();
+            glEnd();
 
+            glPopMatrix();
+        }
 
         // post-render
         renderer.EndFrame();
