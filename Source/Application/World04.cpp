@@ -10,7 +10,7 @@ namespace nc
         auto material = GET_RESOURCE(Material, "materials/squirrel.mtrl");
         m_model = std::make_shared<Model>();
         m_model->SetMaterial(material);
-        m_model->Load("models/squirrel.glb");
+        m_model->Load("models/sphere.obj");
 
         return true;
     }
@@ -25,9 +25,15 @@ namespace nc
         ENGINE.GetSystem<Gui>()->BeginFrame();
 
         ImGui::Begin("Transform");
-        ImGui::DragFloat3("Position", &m_transform.position[0]);
+        ImGui::DragFloat3("Position", &m_transform.position[0], 0.1f);
         ImGui::DragFloat3("Rotation", &m_transform.rotation[0]);
-        ImGui::DragFloat3("Scale", &m_transform.scale[0]);
+        ImGui::DragFloat3("Scale", &m_transform.scale[0], 0.1f);
+        ImGui::End();
+
+        ImGui::Begin("Light");
+        ImGui::DragFloat3("Light Position", glm::value_ptr(lightPosition), 0.1f);
+        ImGui::ColorEdit3("Diffuse Light", glm::value_ptr(lightDiffuse));
+        ImGui::ColorEdit3("Ambient Light", glm::value_ptr(lightAmbient));
         ImGui::End();
 
         m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
@@ -53,6 +59,11 @@ namespace nc
         glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 100.0f);
         material->GetProgram()->SetUniform("projection", projection);
 
+        // lighting
+        material->GetProgram()->SetUniform("light.position", lightPosition);
+        material->GetProgram()->SetUniform("light.diffuse", lightDiffuse);
+        material->GetProgram()->SetUniform("light.ambient", lightAmbient);
+
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
 
@@ -61,7 +72,7 @@ namespace nc
 
         // pre-render
         renderer.BeginFrame();
-
+        
         // render
         m_model->Draw();
         ENGINE.GetSystem<Gui>()->Draw();

@@ -20,5 +20,10 @@ namespace nc
 
 		Transform m_transform;
 		res_t<Model> m_model;
+
+		glm::vec3 lightAmbient{ 0.2, 0.2, 0.2 };
+
+		glm::vec3 lightDiffuse{ 1, 1, 1 };
+		glm::vec3 lightPosition{ 0, 0, 0 };
 	};
 }
