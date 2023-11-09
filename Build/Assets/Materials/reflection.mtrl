@@ -1,0 +1,12 @@
+{
+  "program": "shaders/reflection.prog",
+  "cubemap": "road_cubemap",
+  "cubemaps": [
+    "textures/road_cubemap/posx.jpg",
+    "textures/road_cubemap/negx.jpg",
+    "textures/road_cubemap/posy.jpg",
+    "textures/road_cubemap/negy.jpg",
+    "textures/road_cubemap/posz.jpg",
+    "textures/road_cubemap/negz.jpg"
+  ]
+}

@@ -3,6 +3,7 @@
 #include "Logger.h"
 #include "Random.h"
 #include "FileIO.h"
+#include "StringUtils.h"
 #include "Json.h"
 #include "Time.h"
 
