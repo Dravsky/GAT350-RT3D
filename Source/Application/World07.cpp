@@ -1,4 +1,4 @@
-#include "World06.h"
+#include "World07.h"
 #include "Framework/Framework.h"
 #include "Input/InputSystem.h"
 #include <glm/glm/gtc/type_ptr.hpp>
@@ -6,7 +6,7 @@
 
 namespace nc
 {
-    bool World06::Initialize()
+    bool World07::Initialize()
     {
         m_scene = std::make_unique<Scene>();
         m_scene->Load("scenes/scene_FrameBuffer.json");
@@ -29,12 +29,12 @@ namespace nc
         return true;
     }
 
-    void World06::Shutdown()
+    void World07::Shutdown()
     {
 
     }
 
-    void World06::Update(float dt)
+    void World07::Update(float dt)
     {
         m_time += dt;
 
@@ -106,7 +106,7 @@ namespace nc
         ENGINE.GetSystem<Gui>()->EndFrame();
     }
 
-    void World06::Draw(Renderer& renderer)
+    void World07::Draw(Renderer& renderer)
     {
         // *** PASS 1 ***
         m_scene->GetActorByName("postprocess")->active = false;

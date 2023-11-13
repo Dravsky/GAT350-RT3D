@@ -7,7 +7,7 @@
 namespace nc
 {
 
-	class World06 : public World
+	class World07 : public World
 	{
 	public:
 		const uint32_t INVERT_MASK		= (1 << 0);
